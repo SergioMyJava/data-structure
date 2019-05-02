@@ -3,7 +3,7 @@ package LinkedList;
 import java.util.Iterator;
 import java.util.function.Consumer;
 
-public class SimpleLinkedList<V> implements SimpleList<V>,Iterable {
+public class SimpleLinkedList<V> implements SimpleList<V>, Iterable {
     int size = 0;
     Node first = null;
     Node last = null;
@@ -26,21 +26,17 @@ public class SimpleLinkedList<V> implements SimpleList<V>,Iterable {
     }
 
     public V get(int index) {
-        try {
-            Node target = first;
-            if (index == 1) {
-                return (V) target.getValue();
-            }
-            if (index > 1 && index <= size) {
-                for (int i = 1; i <= index - 1; i++) {
-                    target = target.getBehind();
-                }
-                return (V) target.getValue();
-            }
-        } catch (NullPointerException e) {
-            System.out.println(e);
+        Node target = first;
+        if (index == 1) {
+            return (V) target.getValue();
         }
-        return (V) new IndexOutOfBoundsException();
+        if (index > 1 && index <= size) {
+            for (int i = 1; i <= index - 1; i++) {
+                target = target.getBehind();
+            }
+            return (V) target.getValue();
+        }
+        throw new IndexOutOfBoundsException();
     }
 
     public boolean delete(int index) {
@@ -72,13 +68,11 @@ public class SimpleLinkedList<V> implements SimpleList<V>,Iterable {
 
     public Iterator iterator() {
         return new Iterator() {
-            int current = 0;
-            Node node = first;
-            int next = 0;
+            Node cursor = first;
 
             @Override
             public boolean hasNext() {
-                if (node.getBehind() != null) {
+                if (cursor != null) {
                     return true;
                 }
                 return false;
@@ -86,21 +80,11 @@ public class SimpleLinkedList<V> implements SimpleList<V>,Iterable {
 
             @Override
             public V next() {
-                if (next == 0) {
-                    next++;
-                    return (V) node.getValue();
+                V value = (V) cursor.getValue();
+                if (hasNext()) {
+                    cursor = cursor.getBehind();
                 }
-                else if(node != null) {
-                    node = node.getBehind();
-                    next++;
-                    return (V) node.getValue();
-                }
-                return null;
-            }
-
-            @Override
-            public void forEachRemaining(Consumer action) {
-
+                return value;
             }
         };
     }
