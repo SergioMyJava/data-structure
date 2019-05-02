@@ -3,7 +3,7 @@ package LinkedList;
 import java.util.Iterator;
 import java.util.function.Consumer;
 
-public class SimpleLinkedList<V> implements SimpleList<V> {
+public class SimpleLinkedList<V> implements SimpleList<V>,Iterable {
     int size = 0;
     Node first = null;
     Node last = null;
@@ -78,8 +78,7 @@ public class SimpleLinkedList<V> implements SimpleList<V> {
 
             @Override
             public boolean hasNext() {
-                while (current != size) {
-                    current++;
+                if (node.getBehind() != null) {
                     return true;
                 }
                 return false;

@@ -14,7 +14,7 @@ public class App {
         System.out.println(test.delete(2));
         System.out.println(((SimpleLinkedList) test).size);
         System.out.println(test.get(2));
-int i = 0;
+
         Iterator itr = test.iterator();
         while (itr.hasNext()){
             System.out.println(itr.next());
