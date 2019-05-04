@@ -1,20 +1,17 @@
 package LinkedList;
 
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SimpleLinkedListTest<V> {
 
     private SimpleList exp = new SimpleLinkedList();
 
-    @org.junit.jupiter.api.Test
+
     @BeforeEach
     @DisplayName("Must return true")
 
@@ -28,7 +25,7 @@ public class SimpleLinkedListTest<V> {
         assertTrue(exp.add(0));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     @DisplayName("Must return value by index")
     void get() {
         assertEquals(12, exp.get(0));
@@ -37,7 +34,7 @@ public class SimpleLinkedListTest<V> {
         assertEquals(1, exp.get(1));
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     @DisplayName("Must return true")
     void delete() {
         assertTrue(exp.delete(0));
@@ -47,7 +44,7 @@ public class SimpleLinkedListTest<V> {
         assertEquals(3,exp.getSize());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     @DisplayName("Must Exaption")
     public void shouldThrowException() {
         Assertions.assertThrows(IndexOutOfBoundsException.class,() ->  exp.get(8));
