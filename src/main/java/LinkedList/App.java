@@ -1,33 +1,36 @@
 package LinkedList;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-        SimpleList<Integer> test = new SimpleLinkedList();
-        test.add(12);
-        test.add(13);
-        test.add(15);
-        test.add(1);
-        System.out.println(((SimpleLinkedList) test).size);
-//        System.out.println(test.delete(2));
-//        System.out.println(test.delete(9));
-        System.out.println(((SimpleLinkedList) test).size);
-        System.out.println(test.get(2));
+        SimpleLinkedList<Integer> exp = new SimpleLinkedList();
+        exp.add(12);
+        exp.add(1);
+        exp.add(2);
+        exp.add(129);
+        exp.add(987768764);
+        exp.add(-5);
+        exp.add(0);
 
-        Iterator itr = test.iterator();
-        while (itr.hasNext()) {
-            System.out.println(itr.next());
-        }
-        System.out.println("------------------");
-        for (Object a : test) {
+        System.out.println(exp.get(-1));
+        System.out.println(exp.get(5));
+        System.out.println(exp.get(6));
+        System.out.println(exp.get(5));
+
+        System.out.println(exp.delete(7));
+        System.out.println(exp.delete(0));
+        System.out.println(exp.delete(2));
+        System.out.println(exp.delete(3));
+        System.out.println(exp.getSize());
+
+        for (Object a : exp) {
             System.out.println(a);
+
+
         }
     }
 }
-//        TaskFromViaGames test = new TaskFromViaGames();
-//        int [] arr = {1,4,3,9,34,12};
-//        System.out.println(test.getSecondMax(arr));
-//    }
+
 

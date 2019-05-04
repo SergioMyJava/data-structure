@@ -7,6 +7,10 @@ public class SimpleLinkedList<V> implements SimpleList<V>, Iterable {
     Node<V> first = null;
     Node<V> last = null;
 
+    public int getSize(){
+        return size;
+    }
+
     public boolean add(V value) {
         if (size == 0) {
             first = new Node(first, last, value);
@@ -26,11 +30,15 @@ public class SimpleLinkedList<V> implements SimpleList<V>, Iterable {
 
     public V get(int index) {
         Node<V> target = first;
-        if (index == 1) {
+
+        if (index == 0) {
             return target.getValue();
         }
-        if (index > 1 && index <= size) {
-            for (int i = 1; i <= index - 1; i++) {
+        if(index == size-1){
+            return last.getValue();
+        }
+        if (index > 0 && index < size) {
+            for (int i = 0; i < index; i++) {
                 target = target.getBehind();
             }
             return target.getValue();
@@ -39,42 +47,46 @@ public class SimpleLinkedList<V> implements SimpleList<V>, Iterable {
     }
 
     public boolean delete(int index) {
-        try {
+//        try {
             Node target = first;
-            if (index == size) {
-                Node node = last;
+            if(index == 0){
+                Node node = first.getBehind();
                 node.setAhead(null);
+                first = node;
+                size--;
+                return true;
+            }
+            if (index == size-1) {
+                Node node = last.getAhead();
+                node.setBehind(null);
+                last = node;
                 size--;
                 return true;
             }
             if (index > 0 && index < size) {
-                for (int i = 1; i <= index - 1; i++) {
+                for (int i = 0; i < index; i++) {
                     target = target.getBehind();
                 }
                 Node node = target.getAhead();
-                node.setBehind(target.getBehind());// for an element that stands in front of the element being deleted,
-                // change the link of the element of the element following it
+                node.setBehind(target.getBehind());
                 node = target.getBehind();
                 node.setAhead(target.getAhead());
                 size--;
                 return true;
             }
-        } catch (NullPointerException e) {
-            System.out.println("Вы выскочили за пределы списка!");
-        }
-        return false;
+//        } catch (NullPointerException e) {
+//            System.out.println("Вы выскочили за пределы списка!");
+//        }
+        throw new IndexOutOfBoundsException();
     }
 
-    public Iterator iterator() {
+    public Iterator<V> iterator() {
         return new Iterator() {
             Node<V> cursor = first;
 
             @Override
             public boolean hasNext() {
-                if (cursor != null) {
-                    return true;
-                }
-                return false;
+                return cursor != null;
             }
 
             @Override
