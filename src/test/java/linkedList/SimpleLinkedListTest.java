@@ -1,4 +1,4 @@
-package LinkedList;
+package linkedList;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,19 +10,16 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SimpleLinkedListTest<V> {
 
     private SimpleList exp = new SimpleLinkedList();
-
-
+    
     @BeforeEach
-    @DisplayName("Must return true")
-
     void add() {
-        assertTrue(exp.add(12));
-        assertTrue(exp.add(1));
-        assertTrue(exp.add(2));
-        assertTrue(exp.add(129));
-        assertTrue(exp.add(987768764));
-        assertTrue(exp.add(-5));
-        assertTrue(exp.add(0));
+        exp.add(12);
+        exp.add(1);
+        exp.add(2);
+        exp.add(129);
+        exp.add(987768764);
+        exp.add(-5);
+        exp.add(0);
     }
 
     @Test

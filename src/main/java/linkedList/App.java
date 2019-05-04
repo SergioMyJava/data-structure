@@ -1,11 +1,9 @@
-package LinkedList;
-
-import java.util.LinkedList;
-import java.util.List;
+package linkedList;
 
 public class App {
     public static void main(String[] args) {
         SimpleLinkedList<Integer> exp = new SimpleLinkedList();
+
         exp.add(12);
         exp.add(1);
         exp.add(2);
@@ -14,12 +12,12 @@ public class App {
         exp.add(-5);
         exp.add(0);
 
-        System.out.println(exp.get(-1));
+        System.out.println(exp.get(1));
         System.out.println(exp.get(5));
         System.out.println(exp.get(6));
         System.out.println(exp.get(5));
 
-        System.out.println(exp.delete(7));
+        System.out.println(exp.delete(6));
         System.out.println(exp.delete(0));
         System.out.println(exp.delete(2));
         System.out.println(exp.delete(3));
