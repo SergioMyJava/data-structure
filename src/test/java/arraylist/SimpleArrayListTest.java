@@ -1,5 +1,6 @@
-package linkedList;
+package arraylist;
 
+import linkedList.SimpleList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -7,38 +8,34 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SimpleLinkedListTest<V> {
-
-    private SimpleList exp = new SimpleLinkedList();
+class SimpleArrayListTest {
+    private SimpleList exp = new SimpleArrayList();
 
     @BeforeEach
     void add() {
+        exp.add(11);
         exp.add(12);
-        exp.add(1);
-        exp.add(2);
-        exp.add(129);
-        exp.add(987768764);
-        exp.add(-5);
-        exp.add(0);
+        exp.add(13);
+        exp.add(14);
+        exp.add(15);
+        exp.add(16);
     }
 
     @Test
     @DisplayName("Must return value by index")
     void get() {
-        assertEquals(12, exp.get(0));
-        assertEquals(-5, exp.get(5));
-        assertEquals(0, exp.get(6));
-        assertEquals(1, exp.get(1));
+        assertEquals(12,exp.get(1));
+        assertEquals(11,exp.get(0));
+        assertEquals(15,exp.get(4));
+        assertEquals(16,exp.get(5));
     }
 
     @Test
-    @DisplayName("Must return true")
     void delete() {
+        assertTrue(exp.delete(5));
+        assertTrue(exp.delete(4));
         assertTrue(exp.delete(0));
-        assertTrue(exp.delete(2));
-        assertTrue(exp.delete(3));
-        assertTrue(exp.delete(3));
-        assertEquals(3,exp.getSize());
+        assertTrue(exp.delete(1));
     }
 
     @Test
