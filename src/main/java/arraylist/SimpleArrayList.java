@@ -1,22 +1,23 @@
 package arraylist;
 
 import linkedlist.SimpleList;
+
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class SimpleArrayList<V> implements SimpleList<V>,Iterable {
-    private Object[] array = new Object[]{};
+public class SimpleArrayList<V> implements SimpleList<V>, Iterable<V> {
+    private V[] array = (V[]) new Object[]{};
 
     @Override
     public boolean add(V value) {
-        array = Arrays.copyOf(array,array.length+1);
-        array[array.length-1] = value;
+        array = Arrays.copyOf(array, array.length + 1);
+        array[array.length - 1] = value;
         return true;
     }
 
     @Override
-    public Object get(int index) {
-        if(index>=0 && index<=array.length){
+    public V get(int index) {
+        if (index >= 0 && index <= array.length) {
             return array[index];
         }
         throw new IndexOutOfBoundsException();
@@ -24,11 +25,11 @@ public class SimpleArrayList<V> implements SimpleList<V>,Iterable {
 
     @Override
     public boolean delete(int index) {
-        if(index>=0 && index<=array.length){
+        if (index >= 0 && index <= array.length) {
             int newIndex = 0;
-            Object[] newArray = Arrays.copyOf(array,array.length-1);
-            for(int x =0;x<array.length;x++){
-                if(x!=index){
+            V[] newArray = (V[]) new Object[array.length - 1];
+            for (int x = 0; x < array.length; x++) {
+                if (x != index) {
                     newArray[newIndex] = array[x];
                     newIndex++;
                 }
@@ -45,12 +46,13 @@ public class SimpleArrayList<V> implements SimpleList<V>,Iterable {
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<V> iterator() {
         return new Iterator<V>() {
             int cursor = 0;
+
             @Override
             public boolean hasNext() {
-                if(cursor < array.length && cursor >= 0){
+                if (cursor < array.length && cursor >= 0) {
                     return true;
                 }
                 return false;
@@ -58,8 +60,8 @@ public class SimpleArrayList<V> implements SimpleList<V>,Iterable {
 
             @Override
             public V next() {
-                V obj =(V) array[cursor];
-                if(hasNext()){
+                V obj = array[cursor];
+                if (hasNext()) {
                     cursor++;
                 }
                 return obj;

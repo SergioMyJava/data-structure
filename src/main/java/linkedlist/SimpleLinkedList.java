@@ -2,7 +2,7 @@ package linkedlist;
 
 import java.util.Iterator;
 
-public class SimpleLinkedList<V> implements SimpleList<V>, Iterable {
+public class SimpleLinkedList<V> implements SimpleList<V>, Iterable<V> {
     int size = 0;
     Node<V> first = null;
     Node<V> last = null;
@@ -11,6 +11,7 @@ public class SimpleLinkedList<V> implements SimpleList<V>, Iterable {
         return size;
     }
 
+    @Override
     public boolean add(V value) {
         if (size == 0) {
             first = new Node(first, last, value);
@@ -28,6 +29,7 @@ public class SimpleLinkedList<V> implements SimpleList<V>, Iterable {
         return false;
     }
 
+    @Override
     public V get(int index) {
         Node<V> target = first;
 
@@ -46,8 +48,8 @@ public class SimpleLinkedList<V> implements SimpleList<V>, Iterable {
         throw new IndexOutOfBoundsException();
     }
 
+    @Override
     public boolean delete(int index) {
-//        try {
             Node target = first;
             if(index == 0){
                 Node node = first.getBehind();
@@ -74,14 +76,12 @@ public class SimpleLinkedList<V> implements SimpleList<V>, Iterable {
                 size--;
                 return true;
             }
-//        } catch (NullPointerException e) {
-//            System.out.println("Вы выскочили за пределы списка!");
-//        }
         throw new IndexOutOfBoundsException();
     }
 
+    @Override
     public Iterator<V> iterator() {
-        return new Iterator() {
+        return new Iterator<V>() {
             Node<V> cursor = first;
 
             @Override
