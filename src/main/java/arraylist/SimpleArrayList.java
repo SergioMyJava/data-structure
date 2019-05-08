@@ -1,6 +1,6 @@
 package arraylist;
 
-import linkedList.SimpleList;
+import linkedlist.SimpleList;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -26,7 +26,7 @@ public class SimpleArrayList<V> implements SimpleList<V>,Iterable {
     public boolean delete(int index) {
         if(index>=0 && index<=array.length){
             int newIndex = 0;
-            Object[] newArray = new Object[array.length-1];
+            Object[] newArray = Arrays.copyOf(array,array.length-1);
             for(int x =0;x<array.length;x++){
                 if(x!=index){
                     newArray[newIndex] = array[x];

@@ -1,4 +1,4 @@
-package linkedList;
+package linkedlist;
 
 public interface SimpleList<V> extends Iterable {
     boolean add(V value);

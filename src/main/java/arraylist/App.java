@@ -1,8 +1,7 @@
 package arraylist;
 
-import linkedList.SimpleList;
+import linkedlist.SimpleList;
 
-import javax.swing.text.html.HTMLDocument;
 import java.util.Iterator;
 
 public class App {
