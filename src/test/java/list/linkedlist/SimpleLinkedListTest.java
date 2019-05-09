@@ -1,6 +1,6 @@
-package linkedlist;
+package list.linkedlist;
 
-import simplelist.SimpleList;
+import list.simplelist.SimpleList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

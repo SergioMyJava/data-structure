@@ -1,10 +1,11 @@
-package arraylist;
+package list;
 
+import list.arraylist.SimpleArrayList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import simplelist.SimpleList;
+import list.simplelist.SimpleList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
