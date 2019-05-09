@@ -10,10 +10,6 @@ public class SimpleArrayList<V> implements SimpleList<V>, Iterable<V> {
     private static final int DEFAULT_CAPACITY = 10;
     private int size = 0;
 
-    public int arrayLanth(){
-        return array.length;
-    }
-
     @Override
     public boolean add(V value) {
         if (array == null) {
@@ -48,7 +44,7 @@ public class SimpleArrayList<V> implements SimpleList<V>, Iterable<V> {
     }
 
     private void sizeCheck() {
-        if (array.length / size == 2) {
+        if (array.length /2  == size) {
             V[] newArray = Arrays.copyOf(array, size);
             array = newArray;
         }
