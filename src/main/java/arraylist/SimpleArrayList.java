@@ -5,32 +5,29 @@ import simplelist.SimpleList;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class SimpleArrayList<V> implements SimpleList<V>,Iterable<V> {
+public class SimpleArrayList<V> implements SimpleList<V>, Iterable<V> {
     private V[] array = null;
     private static final int DEFAULT_CAPACITY = 10;
     private int size = 0;
 
+    public int arrayLanth(){
+        return array.length;
+    }
+
     @Override
     public boolean add(V value) {
-        if(array == null){
-            array =(V[]) new Object[DEFAULT_CAPACITY];
+        if (array == null) {
+            array = (V[]) new Object[DEFAULT_CAPACITY];
         }
-        if(array.length > size){
-            array[size] = value;
-            size++;
-        }
-        else {
-            V [] oldArray = array;
-            V [] newArray = Arrays.copyOf(oldArray,array.length*2);
-            array = newArray;
-            add(value);
-        }
+        array[size] = value;
+        size++;
+        sizeCheck();
         return true;
     }
 
     @Override
     public V get(int index) {
-        if (index >= 0 && index <= array.length) {
+        if (index >= 0 && index < size) {
             return array[index];
         }
         throw new IndexOutOfBoundsException();
@@ -40,13 +37,26 @@ public class SimpleArrayList<V> implements SimpleList<V>,Iterable<V> {
     public boolean delete(int index) {
         if (index >= 0 && index <= size) {
             for (int x = index; x < size; x++) {
-                if((x+1)!= size)
-                array[x] = array[x+1];
+                if ((x + 1) != size)
+                    array[x] = array[x + 1];
             }
             size--;
+            sizeCheck();
             return true;
         }
         throw new IndexOutOfBoundsException();
+    }
+
+    private void sizeCheck() {
+        if (array.length / size == 2) {
+            V[] newArray = Arrays.copyOf(array, size);
+            array = newArray;
+        }
+        if (array.length == size) {
+            V[] oldArray = array;
+            V[] newArray = Arrays.copyOf(oldArray, array.length * 2);
+            array = newArray;
+        }
     }
 
     @Override
