@@ -1,4 +1,4 @@
-package stack.simplestack;
+package stack;
 
 public interface SimpleStack<V> {
     boolean put(V value);

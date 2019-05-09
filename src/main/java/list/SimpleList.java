@@ -1,4 +1,4 @@
-package list.simplelist;
+package list;
 
 public interface SimpleList<V> extends Iterable<V> {
     boolean add(V value);

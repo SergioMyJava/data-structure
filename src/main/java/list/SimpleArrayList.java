@@ -1,6 +1,6 @@
-package list.arraylist;
+package list;
 
-import list.simplelist.SimpleList;
+import list.SimpleList;
 
 import java.util.Arrays;
 import java.util.Iterator;

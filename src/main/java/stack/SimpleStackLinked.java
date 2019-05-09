@@ -1,6 +1,4 @@
-package stack.SimpleStackLinked;
-
-import stack.simplestack.SimpleStack;
+package stack;
 
 import java.util.EmptyStackException;
 import java.util.Iterator;

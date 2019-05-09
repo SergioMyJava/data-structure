@@ -1,6 +1,6 @@
-package list.linkedlist;
+package list;
 
-import list.simplelist.SimpleList;
+import list.SimpleList;
 
 import java.util.Iterator;
 
