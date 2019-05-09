@@ -1,11 +1,13 @@
 package linkedlist;
 
+import simplelist.SimpleList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SimpleLinkedListTest<V> {
 
@@ -38,7 +40,7 @@ public class SimpleLinkedListTest<V> {
         assertTrue(exp.delete(2));
         assertTrue(exp.delete(3));
         assertTrue(exp.delete(3));
-        assertEquals(3,exp.getSize());
+        assertEquals(3,exp.size());
     }
 
     @Test

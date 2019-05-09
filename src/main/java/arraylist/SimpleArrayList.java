@@ -1,17 +1,30 @@
 package arraylist;
 
-import linkedlist.SimpleList;
+import simplelist.SimpleList;
 
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class SimpleArrayList<V> implements SimpleList<V>, Iterable<V> {
-    private V[] array = (V[]) new Object[]{};
+public class SimpleArrayList<V> implements SimpleList<V>,Iterable<V> {
+    private V[] array = null;
+    private static final int DEFAULT_CAPACITY = 10;
+    private int size = 0;
 
     @Override
     public boolean add(V value) {
-        array = Arrays.copyOf(array, array.length + 1);
-        array[array.length - 1] = value;
+        if(array == null){
+            array =(V[]) new Object[DEFAULT_CAPACITY];
+        }
+        if(array.length > size){
+            array[size] = value;
+            size++;
+        }
+        else {
+            V [] oldArray = array;
+            V [] newArray = Arrays.copyOf(oldArray,array.length*2);
+            array = newArray;
+            add(value);
+        }
         return true;
     }
 
@@ -25,24 +38,20 @@ public class SimpleArrayList<V> implements SimpleList<V>, Iterable<V> {
 
     @Override
     public boolean delete(int index) {
-        if (index >= 0 && index <= array.length) {
-            int newIndex = 0;
-            V[] newArray = (V[]) new Object[array.length - 1];
-            for (int x = 0; x < array.length; x++) {
-                if (x != index) {
-                    newArray[newIndex] = array[x];
-                    newIndex++;
-                }
+        if (index >= 0 && index <= size) {
+            for (int x = index; x < size; x++) {
+                if((x+1)!= size)
+                array[x] = array[x+1];
             }
-            array = newArray;
+            size--;
             return true;
         }
         throw new IndexOutOfBoundsException();
     }
 
     @Override
-    public int getSize() {
-        return array.length;
+    public int size() {
+        return size;
     }
 
     @Override
@@ -52,7 +61,7 @@ public class SimpleArrayList<V> implements SimpleList<V>, Iterable<V> {
 
             @Override
             public boolean hasNext() {
-                if (cursor < array.length && cursor >= 0) {
+                if (cursor < size && cursor >= 0) {
                     return true;
                 }
                 return false;

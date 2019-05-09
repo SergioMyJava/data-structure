@@ -21,7 +21,7 @@ public class App {
         System.out.println(exp.delete(0));
         System.out.println(exp.delete(2));
         System.out.println(exp.delete(3));
-        System.out.println(exp.getSize());
+        System.out.println(exp.size());
 
         for (Object a : exp) {
             System.out.println(a);

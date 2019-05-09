@@ -1,5 +1,7 @@
 package linkedlist;
 
+import simplelist.SimpleList;
+
 import java.util.Iterator;
 
 public class SimpleLinkedList<V> implements SimpleList<V>, Iterable<V> {
@@ -7,7 +9,7 @@ public class SimpleLinkedList<V> implements SimpleList<V>, Iterable<V> {
     Node<V> first = null;
     Node<V> last = null;
 
-    public int getSize(){
+    public int size(){
         return size;
     }
 
