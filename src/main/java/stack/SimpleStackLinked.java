@@ -4,24 +4,30 @@ import java.util.EmptyStackException;
 import java.util.Iterator;
 
 public class SimpleStackLinked<V> implements SimpleStack<V>, Iterable<V> {
-    Node lastNode = null;
-    int size = 0;
+    private Node<V> lastNode = null;
+    private int size = 0;
+
+    public int getSize(){
+        return size;
+    }
 
     @Override
     public boolean put(V value) {
-        Node newNode = new Node(value);
+        Node<V> newNode = new Node(value);
         newNode.setAhead(lastNode);
         lastNode = newNode;
+        size++
         return true;
     }
 
     @Override
     public V pop() throws EmptyStackException {
         if (lastNode.ahead != null) {
-            Node returnNode = lastNode;
+            Node<V> returnNode = lastNode;
             Node newLastNode = lastNode.ahead;
             lastNode = newLastNode;
-            return (V) returnNode.getValue();
+            size--;
+            return  returnNode.getValue();
         }
         throw new EmptyStackException();
     }
@@ -29,7 +35,7 @@ public class SimpleStackLinked<V> implements SimpleStack<V>, Iterable<V> {
     @Override
     public V peek() {
         if (lastNode.ahead != null) {
-            return (V) lastNode.getValue();
+            return lastNode.getValue();
         }
         throw new EmptyStackException();
     }
