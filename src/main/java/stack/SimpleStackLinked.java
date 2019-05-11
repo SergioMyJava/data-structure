@@ -26,6 +26,7 @@ public class SimpleStackLinked<V> implements SimpleStack<V>, Iterable<V> {
             if (lastNode.ahead == null) {
                 Node<V> returnNode = lastNode;
                 lastNode = null;
+                size--;
                 return returnNode.getValue();
             }
             else{
