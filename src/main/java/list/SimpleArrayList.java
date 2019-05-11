@@ -1,7 +1,5 @@
 package list;
 
-import list.SimpleList;
-
 import java.util.Arrays;
 import java.util.Iterator;
 

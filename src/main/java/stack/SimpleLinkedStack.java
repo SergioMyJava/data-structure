@@ -3,7 +3,7 @@ package stack;
 import java.util.EmptyStackException;
 import java.util.Iterator;
 
-public class SimpleStackLinked<V> implements SimpleStack<V>, Iterable<V> {
+public class SimpleLinkedStack<V> implements SimpleStack<V>, Iterable<V> {
     private Node<V> lastNode = null;
     private int size = 0;
 

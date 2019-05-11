@@ -1,24 +1,26 @@
 package stack;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SimpleStackLinkedTest {
-    SimpleStack<Integer> exp = new SimpleStackLinked<>();
+class SimpleLinkedStackTest {
+    SimpleStack<Integer> exp = new SimpleLinkedStack<>();
 
     @BeforeEach
     void put() {
-        assertTrue(exp.put(1));
-        assertTrue(exp.put(2));
-        assertTrue(exp.put(3));
-        assertTrue(exp.put(4));
-        assertTrue(exp.put(5));
-        assertTrue(exp.put(6));
+        exp.put(1);
+        exp.put(2);
+        exp.put(3);
+        exp.put(4);
+        exp.put(5);
+        exp.put(6);
     }
 
     @Test
+    @DisplayName("Should pop numbers in right order to prove that it's a stack")
     void pop() {
         assertEquals(6,exp.getSize());
         assertEquals(6,exp.pop());
@@ -36,6 +38,7 @@ class SimpleStackLinkedTest {
     }
 
     @Test
+    @DisplayName("Should get an item with the peek method but keep it in the stack")
     void peek() {
         assertEquals(6,exp.getSize());
         assertEquals(6,exp.peek());
