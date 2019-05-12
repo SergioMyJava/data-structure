@@ -7,6 +7,7 @@ public class SimpleLinkedStack<V> implements SimpleStack<V>, Iterable<V> {
     private Node<V> lastNode = null;
     private int size = 0;
 
+    @Override
     public int getSize(){
         return size;
     }
@@ -21,7 +22,7 @@ public class SimpleLinkedStack<V> implements SimpleStack<V>, Iterable<V> {
     }
 
     @Override
-    public V pop() throws EmptyStackException {
+    public V pop(){
         if(lastNode != null) {
             if (lastNode.ahead == null) {
                 Node<V> returnNode = lastNode;
