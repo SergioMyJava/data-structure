@@ -1,6 +1,5 @@
-package Queue;
+package queue;
 
-import java.util.EmptyStackException;
 import java.util.Iterator;
 
 public class SimpleLinkedQueque<V> implements SimpleQueue<V>, Iterable<V> {
@@ -30,7 +29,7 @@ public class SimpleLinkedQueque<V> implements SimpleQueue<V>, Iterable<V> {
         if (firstNode != null) {
             return firstNode.getValue();
         }
-        throw new EmptyStackException();
+        throw new IndexOutOfBoundsException();
     }
 
     @Override
@@ -50,11 +49,11 @@ public class SimpleLinkedQueque<V> implements SimpleQueue<V>, Iterable<V> {
                 return value;
             }
         }
-        throw new EmptyStackException();
+        throw new IndexOutOfBoundsException();
     }
 
     @Override
-    public int getSize() {
+    public int size() {
         return size;
     }
 
@@ -80,7 +79,7 @@ public class SimpleLinkedQueque<V> implements SimpleQueue<V>, Iterable<V> {
                     cursor = newNode;
                     return value;
                 }
-                throw new EmptyStackException();
+                throw new IndexOutOfBoundsException();
             }
         };
     }

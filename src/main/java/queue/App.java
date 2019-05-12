@@ -1,9 +1,4 @@
-package Queue;
-
-import java.util.Deque;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
+package queue;
 
 public class App {
     public static void main(String[] args) {
@@ -28,8 +23,13 @@ public class App {
 //        System.out.println("size = " + exp.getSize());
 //        System.out.println(exp.poll());
 //        System.out.println("size = " + exp.getSize());
-        for(Integer a : exp){
-            System.out.println(a);
-        }
+//        for(Integer a : exp){
+//            System.out.println(a);
+       // }
+        System.out.println(exp.poll());
+        System.out.println(exp.poll());
+        System.out.println(exp.poll());
+        System.out.println(exp.poll());
+        System.out.println(exp.poll());
     }
 }

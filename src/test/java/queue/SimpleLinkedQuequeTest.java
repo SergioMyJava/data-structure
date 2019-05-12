@@ -1,4 +1,4 @@
-package Queue;
+package queue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,11 +23,11 @@ class SimpleLinkedQuequeTest {
     @DisplayName("Must return first value, without delete")
     void peek() {
         assertEquals(1,exp.peek());
-        assertEquals(6,exp.getSize());
+        assertEquals(6,exp.size());
         assertEquals(1,exp.peek());
-        assertEquals(6,exp.getSize());
+        assertEquals(6,exp.size());
         assertEquals(1,exp.peek());
-        assertEquals(6,exp.getSize());
+        assertEquals(6,exp.size());
 
     }
 
@@ -35,16 +35,16 @@ class SimpleLinkedQuequeTest {
     @DisplayName("Must return value, with delete")
     void poll() {
         assertEquals(1,exp.poll());
-        assertEquals(5,exp.getSize());
+        assertEquals(5,exp.size());
         assertEquals(2,exp.poll());
-        assertEquals(4,exp.getSize());
+        assertEquals(4,exp.size());
         assertEquals(3,exp.poll());
-        assertEquals(3,exp.getSize());
+        assertEquals(3,exp.size());
         assertEquals(4,exp.poll());
-        assertEquals(2,exp.getSize());
+        assertEquals(2,exp.size());
         assertEquals(5,exp.poll());
-        assertEquals(1,exp.getSize());
+        assertEquals(1,exp.size());
         assertEquals(6,exp.poll());
-        assertEquals(0,exp.getSize());
+        assertEquals(0,exp.size());
     }
 }
