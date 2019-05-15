@@ -29,7 +29,7 @@ public class SimpleLinkedQueque<V> implements SimpleQueue<V>, Iterable<V> {
         if (firstNode != null) {
             return firstNode.getValue();
         }
-        throw new IndexOutOfBoundsException();
+        throw new RuntimeException();
     }
 
     @Override
@@ -49,7 +49,7 @@ public class SimpleLinkedQueque<V> implements SimpleQueue<V>, Iterable<V> {
                 return value;
             }
         }
-        throw new IndexOutOfBoundsException();
+        throw new RuntimeException();
     }
 
     @Override
@@ -79,7 +79,7 @@ public class SimpleLinkedQueque<V> implements SimpleQueue<V>, Iterable<V> {
                     cursor = newNode;
                     return value;
                 }
-                throw new IndexOutOfBoundsException();
+                throw new RuntimeException();
             }
         };
     }
