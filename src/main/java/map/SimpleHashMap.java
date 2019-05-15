@@ -14,7 +14,20 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
     }
 
     @Override
-    public K get(K key) {
+    public V get(K key) {
+        int index = hashKey(key) % table.length;
+        if (table[index].getNext() == null) {
+            return table[index].getValue();
+        } else {
+            Node<K, V> nodeFromBacket = table[index];
+            if (nodeFromBacket != null) {
+                if (key.equals(nodeFromBacket.getKey())) {
+                    return nodeFromBacket.getValue();
+                } else {
+                    nodeFromBacket = nodeFromBacket.getNext();
+                }
+            }
+        }
         return null;
     }
 
@@ -24,43 +37,44 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
             thresHold *= 2;
             doubleUp();
         }
-        if(key == null){
+        if (key == null) {
             throw new NullPointerException();
         }
         Node<K, V> newNode = new Node(key, value, hashKey(key), null);
         int index = hashKey(key) % table.length;
-            if(table[index] == null){
-                table[index] = newNode;
-            }
-            if(table[index] != null){
-                Node<K,V> nodeInTheBacket = table[index];
-                K keyFromBacket = nodeInTheBacket.getKey();
-                if(nodeInTheBacket != null){
-                    if(keyFromBacket.equals(key) || keyFromBacket == key){    //обрати внимание, я проверяю ссылка на тот-же ключ или нет это правильно менять значение в таком случае?
-                        nodeInTheBacket.setValue(value);
-                        return true;
-                    }
-                    if(nodeInTheBacket.equals(newNode)){
-                        return false;
-                    }
-                    if(nodeInTheBacket.getNext() == null){
-                        nodeInTheBacket.setNext(newNode);
-                        size++;
-                        return true;
-                    }
-                    else{
-                        nodeInTheBacket = nodeInTheBacket.getNext();
-                    }
+        if (table[index] == null) {
+            table[index] = newNode;
+        }
+        if (table[index] != null) {
+            Node<K, V> nodeInTheBacket = table[index];
+            K keyFromBacket = nodeInTheBacket.getKey();
+            if (nodeInTheBacket != null) {
+                if (keyFromBacket.equals(key) || keyFromBacket == key) {    //обрати внимание, я проверяю ссылка на тот-же ключ или нет это правильно менять значение в таком случае?
+                    nodeInTheBacket.setValue(value);
+                    return true;
+                }
+                if (nodeInTheBacket.equals(newNode)) {
+                    return false;
+                }
+                if (nodeInTheBacket.getNext() == null) {
+                    nodeInTheBacket.setNext(newNode);
+                    size++;
+                    return true;
+                } else {
+                    nodeInTheBacket = nodeInTheBacket.getNext();
                 }
             }
-        return false;
         }
+        return false;
+    }
 
     private int hashKey(K key) {
         return key.hashCode() * 31 + 5;
     }
 
     private void doubleUp() {
+        Node<K, V>[] oldTab = table;
+
     }
 
     @Override
@@ -102,7 +116,7 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
             this.key = key;
         }
 
-        private int getHashKey(){
+        private int getHashKey() {
             return hashKey;
         }
 
@@ -110,7 +124,7 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
             this.value = value;
         }
 
-        private Node<K,V> getNext(){
+        private Node<K, V> getNext() {
             return next;
         }
 
