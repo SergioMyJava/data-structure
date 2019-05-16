@@ -143,6 +143,15 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
 
     @Override
     public boolean ontainsKey(K key) {
+        for (int i = 0; i < table.length; i++) {
+            Node nodeFromBacket = table[i];
+            while (nodeFromBacket != null) {
+                if(nodeFromBacket.getKey().equals(key)){
+                    return true;
+                }
+                nodeFromBacket = nodeFromBacket.getNext();
+            }
+        }
         return false;
     }
 

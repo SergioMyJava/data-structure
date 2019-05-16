@@ -8,12 +8,12 @@ public class App {
         SimpleMap exp = new SimpleHashMap();
 
         System.out.println("Size : "+exp.getSize());
-        exp.put("Л.Н. Толстой","Детство");
-        exp.put("Л.Н. Ленин","Мир");
-        exp.put("А.Н. Чехов","По Сибири");
-        exp.put("Гоголь","Мертвые души");
-        exp.put("Пушкин","Онегин");
-        exp.put("Лермонтов","Бородино");
+//        exp.put("Л.Н. Толстой","Детство");
+//        exp.put("Л.Н. Ленин","Мир");
+//        exp.put("А.Н. Чехов","По Сибири");
+//        exp.put("Гоголь","Мертвые души");
+//        exp.put("Пушкин","Онегин");
+//        exp.put("Лермонтов","Бородино");
         System.out.println("Size : "+exp.getSize());
 
         List key = exp.keys();
@@ -25,6 +25,8 @@ public class App {
         for(Object a:val){
             System.out.println(a);
         }
+
+        System.out.println(exp.ontainsKey("Гог"));
 
     }
 }
