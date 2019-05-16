@@ -7,4 +7,5 @@ public interface SimpleMap<K,V> extends Iterable<V> {
     K keys();
     V values();
     boolean ontainsKey(K key );
+    int getSize();
 }

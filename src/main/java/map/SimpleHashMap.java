@@ -6,21 +6,21 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
     private Node<K, V>[] table;
     static int DEFAULT_CAPACITY = 16;
     private int size;
-    private double thresHold;
+    private int thresHold;
 
     SimpleHashMap() {
         table = new Node[DEFAULT_CAPACITY];
-        thresHold = table.length * 0.75d;
+        thresHold = (int) (table.length * 0.75d);
     }
 
     @Override
     public V get(K key) {
-        int index = hashKey(key) % table.length;
+        int index = (key.hashCode() & 0x7fffffff) % table.length;
         if (table[index].getNext() == null) {
             return table[index].getValue();
         } else {
             Node<K, V> nodeFromBacket = table[index];
-            if (nodeFromBacket != null) {
+            while (nodeFromBacket != null) {
                 if (key.equals(nodeFromBacket.getKey())) {
                     return nodeFromBacket.getValue();
                 } else {
@@ -34,27 +34,24 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
     @Override
     public boolean put(K key, V value) {
         if (size + 1 >= thresHold) {
-            thresHold *= 2;
             doubleUp();
         }
         if (key == null) {
             throw new NullPointerException();
         }
-        Node<K, V> newNode = new Node(key, value, hashKey(key), null);
-        int index = hashKey(key) % table.length;
+        int hash = key.hashCode() & 0x7fffffff;
+        Node<K, V> newNode = new Node(key, value, hash, null);
+        int index = hash % table.length;
         if (table[index] == null) {
             table[index] = newNode;
-        }
-        if (table[index] != null) {
+            size++;
+        } else {
             Node<K, V> nodeInTheBacket = table[index];
             K keyFromBacket = nodeInTheBacket.getKey();
-            if (nodeInTheBacket != null) {
-                if (keyFromBacket.equals(key) || keyFromBacket == key) {    //обрати внимание, я проверяю ссылка на тот-же ключ или нет это правильно менять значение в таком случае?
+            while (nodeInTheBacket != null) {
+                if (keyFromBacket == key || keyFromBacket.equals(key)) {
                     nodeInTheBacket.setValue(value);
                     return true;
-                }
-                if (nodeInTheBacket.equals(newNode)) {
-                    return false;
                 }
                 if (nodeInTheBacket.getNext() == null) {
                     nodeInTheBacket.setNext(newNode);
@@ -68,17 +65,49 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
         return false;
     }
 
-    private int hashKey(K key) {
-        return key.hashCode() * 31 + 5;
-    }
-
     private void doubleUp() {
         Node<K, V>[] oldTab = table;
+        thresHold *= 2;
+        table = new Node[thresHold];
+        for(int i = 0 ; i < oldTab.length;i++){
+            if(oldTab[i] != null){
+                Node<K,V> fromOldBacket = oldTab[i];
+                while (fromOldBacket != null){
+                    int newIndex = fromOldBacket.getHashKey() % table.length;
+                    table[newIndex] = fromOldBacket;
+                    fromOldBacket = fromOldBacket.getNext();
 
+                }
+            }
+        }
     }
 
     @Override
     public boolean remove(K key) {
+        int index = (key.hashCode() & 0x7fffffff) % table.length;
+        if (table[index].getNext() == null) {
+            table[index] = null;
+            size--;
+            return true;
+        }
+        else{
+            Node<K,V> nodeFromBacket = table[index];
+            Node<K,V> previousNod = null;
+            while (nodeFromBacket != null){
+                if (key.equals(nodeFromBacket.getKey())) {
+                    if(previousNod == null){
+                        table[index] = nodeFromBacket.getNext();
+                        return true;
+                    }
+                    previousNod.setNext(nodeFromBacket.getNext());
+                    return true;
+                }
+                else{
+                    previousNod = nodeFromBacket;
+                    nodeFromBacket = nodeFromBacket.getNext();
+                }
+            }
+        }
         return false;
     }
 
@@ -98,9 +127,15 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
     }
 
     @Override
+    public int getSize() {
+        return size;
+    }
+
+    @Override
     public Iterator<V> iterator() {
         return null;
     }
+
 
 
     static class Node<K, V> {
