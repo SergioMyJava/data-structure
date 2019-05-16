@@ -1,6 +1,6 @@
 package map;
 
-import java.util.Iterator;
+import java.util.*;
 
 public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
     private Node<K, V>[] table;
@@ -16,19 +16,21 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
     @Override
     public V get(K key) {
         int index = (key.hashCode() & 0x7fffffff) % table.length;
-        if (table[index].getNext() == null) {
-            return table[index].getValue();
-        } else {
-            Node<K, V> nodeFromBacket = table[index];
-            while (nodeFromBacket != null) {
-                if (key.equals(nodeFromBacket.getKey())) {
-                    return nodeFromBacket.getValue();
-                } else {
-                    nodeFromBacket = nodeFromBacket.getNext();
+        if (table[index] != null) {
+            if (table[index].getNext() == null) {
+                return table[index].getValue();
+            } else {
+                Node<K, V> nodeFromBacket = table[index];
+                while (nodeFromBacket != null) {
+                    if (key.equals(nodeFromBacket.getKey())) {
+                        return nodeFromBacket.getValue();
+                    } else {
+                        nodeFromBacket = nodeFromBacket.getNext();
+                    }
                 }
             }
         }
-        return null;
+        throw new NoSuchElementException();
     }
 
     @Override
@@ -69,10 +71,10 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
         Node<K, V>[] oldTab = table;
         thresHold *= 2;
         table = new Node[thresHold];
-        for(int i = 0 ; i < oldTab.length;i++){
-            if(oldTab[i] != null){
-                Node<K,V> fromOldBacket = oldTab[i];
-                while (fromOldBacket != null){
+        for (int i = 0; i < oldTab.length; i++) {
+            if (oldTab[i] != null) {
+                Node<K, V> fromOldBacket = oldTab[i];
+                while (fromOldBacket != null) {
                     int newIndex = fromOldBacket.getHashKey() % table.length;
                     table[newIndex] = fromOldBacket;
                     fromOldBacket = fromOldBacket.getNext();
@@ -89,20 +91,20 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
             table[index] = null;
             size--;
             return true;
-        }
-        else{
-            Node<K,V> nodeFromBacket = table[index];
-            Node<K,V> previousNod = null;
-            while (nodeFromBacket != null){
+        } else {
+            Node<K, V> nodeFromBacket = table[index];
+            Node<K, V> previousNod = null;
+            while (nodeFromBacket != null) {
                 if (key.equals(nodeFromBacket.getKey())) {
-                    if(previousNod == null){
+                    if (previousNod == null) {
                         table[index] = nodeFromBacket.getNext();
+                        size--;
                         return true;
                     }
                     previousNod.setNext(nodeFromBacket.getNext());
+                    size--;
                     return true;
-                }
-                else{
+                } else {
                     previousNod = nodeFromBacket;
                     nodeFromBacket = nodeFromBacket.getNext();
                 }
@@ -112,13 +114,31 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
     }
 
     @Override
-    public K keys() {
-        return null;
+    public List<K> keys() {
+        List<K> keys = new ArrayList<>(size);
+        for (int i = 0; i < table.length; i++) {
+            Node nodeFromBacket = table[i];
+            while (nodeFromBacket != null) {
+                Node<K, V> first = nodeFromBacket;
+                nodeFromBacket = nodeFromBacket.getNext();
+                keys.add(first.getKey());
+            }
+        }
+        return keys;
     }
 
     @Override
-    public V values() {
-        return null;
+    public List<V> values() {
+        List<V> value = new ArrayList<>(size);
+        for (int i = 0; i < table.length; i++) {
+            Node nodeFromBacket = table[i];
+            while (nodeFromBacket != null) {
+                Node<K, V> first = nodeFromBacket;
+                nodeFromBacket = nodeFromBacket.getNext();
+                value.add(first.getValue());
+            }
+        }
+        return value;
     }
 
     @Override
@@ -131,12 +151,47 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
         return size;
     }
 
-    @Override
-    public Iterator<V> iterator() {
-        return null;
-    }
-
-
+//    @Override
+//    public Iterator<V> iterator() {
+//        return new Iterator<V>() {
+//            int arrayCursor = 0;
+//            int valueCounter;
+//            Node<K, V> cursor = null;
+//
+//            @Override
+//            public boolean hasNext() {
+//                if(valueCounter == size){
+//                    return false;
+//                }
+//                if (cursor != null || cursor.getNext() != null ) {
+//                    return true;
+//                }
+//                if (cursor == null) {
+//                    arrayCursor++;
+//                }
+//                return false;
+//            }
+//
+//            @Override
+//            public V next() {
+//                if (hasNext()) {
+//                    if(cursor.getNext() != null){
+//                        Node<K,V> previousCursor = cursor;
+//                        cursor = previousCursor.getNext();
+//                        valueCounter++;
+//                        return previousCursor.getValue();
+//                    }
+//                    if(cursor != null){
+//
+//                    }
+//                    cursor = table[arrayCursor];
+//
+//                return cursor.getValue();
+//                }
+//                return null;
+//            }
+//        };
+//    }
 
     static class Node<K, V> {
         int hashKey;
