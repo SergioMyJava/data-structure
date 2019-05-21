@@ -10,11 +10,10 @@ public class SimpleArrayList<V> implements SimpleList<V>, Iterable<V> {
 
     @Override
     public boolean add(V value) {
-        if (array == null) {
+            if (array == null) {
             array = (V[]) new Object[DEFAULT_CAPACITY];
         }
-        array[size] = value;
-        size++;
+        array[size++] = value;
         sizeCheck();
         return true;
     }

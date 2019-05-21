@@ -1,32 +1,22 @@
 package map;
 
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class App {
 
     public static void main(String[] args){
         SimpleMap exp = new SimpleHashMap();
-
-        System.out.println("Size : "+exp.getSize());
-//        exp.put("Л.Н. Толстой","Детство");
-//        exp.put("Л.Н. Ленин","Мир");
-//        exp.put("А.Н. Чехов","По Сибири");
-//        exp.put("Гоголь","Мертвые души");
-//        exp.put("Пушкин","Онегин");
-//        exp.put("Лермонтов","Бородино");
-        System.out.println("Size : "+exp.getSize());
-
-        List key = exp.keys();
-        for(Object a:key){
-            System.out.println(a);
-        }
-
-        List val = exp.values();
-        for(Object a:val){
-            System.out.println(a);
-        }
-
-        System.out.println(exp.ontainsKey("Гог"));
-
+        Map<Integer,String> test = new TreeMap<Integer,String>();
+        test.put(1,"one");
+        test.put(1,"two");
+        System.out.println(test.get(1));
+//        for(Object a:val){
+//            System.out.println(a);
+//        }
+//
+//        System.out.println(exp.ontainsKey("Гог"));
+//
     }
 }
