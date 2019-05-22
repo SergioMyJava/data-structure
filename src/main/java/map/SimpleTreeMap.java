@@ -2,33 +2,62 @@ package map;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-public class SimpleSortedMap<K extends Comparable, V> implements SimpleMap<K, V> {
+public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V> {
     Node<K, V> root = null;
     Comparator<? extends K> comparator;
     int size;
 
-    SimpleSortedMap() {
+    SimpleTreeMap() {
     }
 
-    SimpleSortedMap(Comparator comparator) {
+    SimpleTreeMap(Comparator comparator) {
         this.comparator = comparator;
     }
 
     @Override
     public V get(K key) {
+        if (root == null) {
+            throw new NullPointerException();
+        }
+        return getByTheKey(key, root);
+    }
+
+    private V getByTheKey(K key, Node<K, V> nodeCursor) {
+        K keyCursor = nodeCursor.getKey();
+        if (keyCursor.compareTo(key) == 0) {
+            V returnValue = nodeCursor.getValue();
+            return returnValue;
+        }
+        else{
+
+                if (keyCursor.compareTo(key) > 0) {
+                    Node<K, V> newNodeCursor = nodeCursor.getLeft();
+                    getByTheKey(key, newNodeCursor);
+                }
+
+                if (keyCursor.compareTo(key) < 0) {
+                    Node<K, V> newNodeCursor = nodeCursor.getRight();
+                    getByTheKey(key, newNodeCursor);
+                }
+            }
         return null;
     }
 
     @Override
     public boolean put(K key, V value) {
+        return addNode(key, value, root);
+    }
+
+    private boolean addNode(K key, V value, Node<K, V> nodeCursor) {
         if (root == null) {
             root = new Node(value, key, null, null);
             size++;
             return true;
         }
-        Node<K, V> nodeCursor = root;
-        K keyCursor = root.getKey();
+
+        K keyCursor = nodeCursor.getKey();
 
         if (keyCursor.compareTo(key) > 0) {
             Node<K, V> left = nodeCursor.getLeft();
@@ -37,8 +66,8 @@ public class SimpleSortedMap<K extends Comparable, V> implements SimpleMap<K, V>
                 size++;
                 return true;
             } else {
-                nodeCursor = nodeCursor.getLeft();
-                put(key, value);
+                Node<K, V> newNodeCursor = nodeCursor.getLeft();
+                addNode(key, value, newNodeCursor);
             }
         }
 
@@ -53,8 +82,8 @@ public class SimpleSortedMap<K extends Comparable, V> implements SimpleMap<K, V>
                 nodeCursor.setRight(new Node(value, key, null, null));
                 size++;
             } else {
-                nodeCursor = nodeCursor.getRight();
-                put(key, value);
+                Node<K, V> newNodeCursor = nodeCursor.getRight();
+                addNode(key, value, newNodeCursor);
             }
         }
         return false;
@@ -83,13 +112,6 @@ public class SimpleSortedMap<K extends Comparable, V> implements SimpleMap<K, V>
     @Override
     public int getSize() {
         return size;
-    }
-
-    private class KeyComparator implements Comparator<K> {
-        @Override
-        public int compare(K o1, K o2) {
-            return o1.compareTo(o2);
-        }
     }
 
     private class Node<K, V> {
