@@ -2,7 +2,6 @@ package map;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V> {
     Node<K, V> root = null;
@@ -24,25 +23,36 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V> {
         return getByTheKey(key, root);
     }
 
-    private V getByTheKey(K key, Node<K, V> nodeCursor) {
-        K keyCursor = nodeCursor.getKey();
+    public V getByTheKey(K key, Node<K, V> nodeCursor) {
+        Node<K,V> newCursor = nodeCursor;
+        K keyCursor = newCursor.getKey();
+//        while (keyCursor != key){
+//            int cmd = keyCursor.compareTo(key);
+//            if(cmd > 0)
+//                getByTheKey(key,newCursor.getLeft()) ;
+//
+//            if(cmd < 0)
+//                getByTheKey(key,newCursor.getRight());
+//
+//            else
+//                return newCursor.getValue();
+//
+//        }
+        Node<K, V> cursorNode = nodeCursor;
         if (keyCursor.compareTo(key) == 0) {
-            V returnValue = nodeCursor.getValue();
-            return returnValue;
+            return cursorNode.getValue();                       // при наступлении этого событи он прыгает
         }
-        else{
 
-                if (keyCursor.compareTo(key) > 0) {
-                    Node<K, V> newNodeCursor = nodeCursor.getLeft();
-                    getByTheKey(key, newNodeCursor);
-                }
+        if (keyCursor.compareTo(key) > 0) {
+            Node<K, V> newNodeCursor = cursorNode.getLeft();
+            getByTheKey(key, newNodeCursor);                    //суда
+        }
 
-                if (keyCursor.compareTo(key) < 0) {
-                    Node<K, V> newNodeCursor = nodeCursor.getRight();
-                    getByTheKey(key, newNodeCursor);
-                }
-            }
-        return null;
+        if (keyCursor.compareTo(key) < 0) {
+            Node<K, V> newNodeCursor = cursorNode.getRight();
+            getByTheKey(key, newNodeCursor);
+        }
+        return null;                                            //потом суда, почему мне вообще не ясно
     }
 
     @Override
@@ -91,6 +101,20 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V> {
 
     @Override
     public boolean remove(K key) {
+        return removeByTheKey(key,root);
+    }
+
+    private boolean removeByTheKey(K key,Node<K,V> cursorNode){
+        if(root == null){
+            throw new NullPointerException();
+        }
+        K cursorKey = cursorNode.getKey();
+        if(cursorKey.compareTo(key) == 0){
+            if(cursorNode.getRight() == null && cursorNode.getLeft() == null){
+
+            }
+            return true;
+        }
         return false;
     }
 
