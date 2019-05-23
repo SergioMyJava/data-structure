@@ -40,19 +40,21 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V> {
 //        }
         Node<K, V> cursorNode = nodeCursor;
         if (keyCursor.compareTo(key) == 0) {
-            return cursorNode.getValue();                       // при наступлении этого событи он прыгает
+            return cursorNode.getValue();                       // Mr. 0: при наступлении этого событи он прыгает
         }
 
         if (keyCursor.compareTo(key) > 0) {
             Node<K, V> newNodeCursor = cursorNode.getLeft();
-            getByTheKey(key, newNodeCursor);                    //суда
+            return getByTheKey(key, newNodeCursor);             // Mr. 0: суда
         }
 
-        if (keyCursor.compareTo(key) < 0) {
+        if (keyCursor.compareTo(key) < 0) {                     // Mr. 1: суда, суда он прыгает. а с какой стати он суда прыгать не должен?
             Node<K, V> newNodeCursor = cursorNode.getRight();
-            getByTheKey(key, newNodeCursor);
+            return getByTheKey(key, newNodeCursor);
         }
-        return null;                                            //потом суда, почему мне вообще не ясно
+        return null;                                            // Mr. 0: потом суда, почему мне вообще не ясно
+                                                                // Mr. 1: и таки чего не ясно? таки все ясно. всегда сюда.
+                                                                //        в любом случае сюда. куда ж еще?
     }
 
     @Override
