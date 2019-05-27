@@ -24,35 +24,25 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V> {
     }
 
     public V getByTheKey(K key, Node<K, V> nodeCursor) {
-        Node<K,V> newCursor = nodeCursor;
+        Node<K, V> newCursor = nodeCursor;
         K keyCursor = newCursor.getKey();
-//        while (keyCursor != key){
-//            int cmd = keyCursor.compareTo(key);
-//            if(cmd > 0)
-//                getByTheKey(key,newCursor.getLeft()) ;
-//
-//            if(cmd < 0)
-//                getByTheKey(key,newCursor.getRight());
-//
-//            else
-//                return newCursor.getValue();
-//
-//        }
-        Node<K, V> cursorNode = nodeCursor;
-        if (keyCursor.compareTo(key) == 0) {
-            return cursorNode.getValue();                       // при наступлении этого событи он прыгает
-        }
 
-        if (keyCursor.compareTo(key) > 0) {
-            Node<K, V> newNodeCursor = cursorNode.getLeft();
-            getByTheKey(key, newNodeCursor);                    //суда
-        }
+        if (keyCursor.compareTo(key) == 0)
+            return newCursor.getValue();
 
-        if (keyCursor.compareTo(key) < 0) {
-            Node<K, V> newNodeCursor = cursorNode.getRight();
-            getByTheKey(key, newNodeCursor);
+
+        else {
+            if (keyCursor.compareTo(key) > 0) {
+                Node<K, V> newNodeCursor = newCursor.getLeft();
+                return getByTheKey(key, newNodeCursor);
+            }
+
+            if (keyCursor.compareTo(key) < 0) {
+                Node<K, V> newNodeCursor = newCursor.getRight();
+                return getByTheKey(key, newNodeCursor);
+            }
         }
-        return null;                                            //потом суда, почему мне вообще не ясно
+        return null;
     }
 
     @Override
@@ -101,16 +91,16 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V> {
 
     @Override
     public boolean remove(K key) {
-        return removeByTheKey(key,root);
+        return removeByTheKey(key, root);
     }
 
-    private boolean removeByTheKey(K key,Node<K,V> cursorNode){
-        if(root == null){
+    private boolean removeByTheKey(K key, Node<K, V> cursorNode) {
+        if (root == null) {
             throw new NullPointerException();
         }
         K cursorKey = cursorNode.getKey();
-        if(cursorKey.compareTo(key) == 0){
-            if(cursorNode.getRight() == null && cursorNode.getLeft() == null){
+        if (cursorKey.compareTo(key) == 0) {
+            if (cursorNode.getRight() == null && cursorNode.getLeft() == null) {
 
             }
             return true;
