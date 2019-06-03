@@ -32,11 +32,12 @@ public class App<V> {
         exp1.put(2,"two");
         exp1.put(3,"three");
         exp1.put(4,"for");
-        List exp2 = exp1.keys();
+        List exp2 = exp1.values();
+        System.out.println(exp1.getSize());
         System.out.println(exp2.size());
-//        for(int i = 1;i<((SimpleTreeMap<Integer, String>) exp1).size;i++){
-//            System.out.println(exp2.get(i));
-//        }
+        for(int i = 0;i< exp1.getSize();i++){
+            System.out.println(exp2.get(i));
+        }
 //        System.out.println(exp.getSize());
 //        System.out.println(exp.get(1));
 //       System.out.println(exp.get(3));
