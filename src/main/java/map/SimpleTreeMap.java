@@ -1,12 +1,12 @@
 package map;
 
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V> {
-    List<K> listKey;
-    List<K> listValue;
+public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, Iterable {
+    List<Node> list;
     Node<K, V> root = null;
     Comparator<? extends K> comparator;
     int size;
@@ -150,6 +150,36 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V> {
     @Override
     public int getSize() {
         return size;
+    }
+
+    @Override
+    public Iterator iterator() {
+        return new Iterator() {
+            Node<K,V> cursor = root;
+            @Override
+            public boolean hasNext() {
+                if(cursor != null){
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public Object next() {
+                if(hasNext()){
+                    //сдесь я должен что то сделать с курсосром не пойму что
+                    if(cursor.getLeft() != null ){
+                        cursor = cursor.getLeft();
+                        return next();
+                    }
+                    if(cursor.getLeft() != null){
+                        cursor = cursor.getLeft();
+                        return next();
+                    }
+                }
+                return null;
+            }
+        };
     }
 
     private class Node<K, V> {
