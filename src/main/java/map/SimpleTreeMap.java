@@ -1,9 +1,11 @@
 package map;
 
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V> {
+    List<K> listKey;
     Node<K, V> root = null;
     Comparator<? extends K> comparator;
     int size;
@@ -110,9 +112,19 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V> {
 
     @Override
     public List keys() {
-        return null;
+        return getAllKeys(root);
     }
 
+    public List getAllKeys(Node node) {
+        if (node != null) {
+            listKey.add((K) node.getKey());
+            getAllKeys(node.getLeft());
+            getAllKeys(node.getRight());
+        }
+    return  listKey;
+    }
+
+    
     @Override
     public List values() {
         return null;

@@ -160,48 +160,6 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
         return size;
     }
 
-//    @Override
-//    public Iterator<V> iterator() {
-//        return new Iterator<V>() {
-//            int arrayCursor = 0;
-//            int valueCounter;
-//            Node<K, V> cursor = null;
-//
-//            @Override
-//            public boolean hasNext() {
-//                if(valueCounter == size){
-//                    return false;
-//                }
-//                if (cursor != null || cursor.getNext() != null ) {
-//                    return true;
-//                }
-//                if (cursor == null) {
-//                    arrayCursor++;
-//                }
-//                return false;
-//            }
-//
-//            @Override
-//            public V next() {
-//                if (hasNext()) {
-//                    if(cursor.getNext() != null){
-//                        Node<K,V> previousCursor = cursor;
-//                        cursor = previousCursor.getNext();
-//                        valueCounter++;
-//                        return previousCursor.getValue();
-//                    }
-//                    if(cursor != null){
-//
-//                    }
-//                    cursor = table[arrayCursor];
-//
-//                return cursor.getValue();
-//                }
-//                return null;
-//            }
-//        };
-//    }
-
     static class Node<K, V> {
         int hashKey;
         Node next;
