@@ -25,8 +25,8 @@ public class App {
         }
 
         System.out.println("test iterator ");//тут я пытаюсь итератор проверить
-        while (iterator.hasNext() == true){
-            System.out.println(iterator.next().toString());
+        if (iterator.hasNext() == true){
+            System.out.println(iterator.next());
         }
     }
 }

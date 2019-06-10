@@ -7,14 +7,11 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
     List listKey;
     List list;
     Node<K, V> root = null;
-    Comparator<? extends K> comparator;
     int size;
+    Node<K,V> cursor;
 
     SimpleTreeMap() {
-    }
-
-    SimpleTreeMap(Comparator comparator) {
-        this.comparator = comparator;
+        cursor = root;
     }
 
     @Override
@@ -31,8 +28,7 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
 
         if (keyCursor.compareTo(key) == 0)
             return newCursor.getValue();
-
-
+        
         else {
             if (keyCursor.compareTo(key) > 0) {
                 Node<K, V> newNodeCursor = newCursor.getLeft();
@@ -119,7 +115,7 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
             getAllKeys(node.getLeft());
             getAllKeys(node.getRight());
         }
-        return  listKey;
+        return listKey;
     }
 
     @Override
@@ -128,23 +124,23 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
         return getAllValues(root);
     }
 
-    private List getAllValues(Node node){
+    private List getAllValues(Node node) {
         if (node != null) {
             listValue.add((K) node.getValue());
             getAllValues(node.getLeft());
             getAllValues(node.getRight());
         }
-        return  listValue;
+        return listValue;
     }
 
     @Override
     public boolean ontainsKey(K key) {
         Iterator test = this.iterator();
-        while (test.hasNext()== true ) {
-            Node<K,V> node =(Node<K, V>) test.next();
-           if(node.getKey() == key){
-               return true;
-           }
+        while (test.hasNext() == true) {
+            Node<K, V> node = (Node<K, V>) test.next();
+            if (node.getKey() == key) {
+                return true;
+            }
         }
         return false;
     }
@@ -159,29 +155,27 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
         return new Iterator() {
             Stack<Node> stack = new Stack<>();
 
-            public Iterator(){
-                stack.push(root);
-            }
+
             @Override
             public boolean hasNext() {
-                return (!stack.isEmpty());
+                return (!stack.isEmpty() || cursor != null);  // если стеке что то есть или курсор не нул то вернет тру
             }
 
             @Override
-            public Node<K,V> next() {
-                if(root!=null || stack.empty()){stack.add(root);}
-                if (!hasNext()) throw new NoSuchElementException("No more nodes remain to iterate");
-                final Node<K,V> node = stack.pop();
-                if(node.getLeft()!= null)
-                    stack.push(node.getLeft());
-                if(node.getRight() != null)
-                    stack.push(node.getRight());
-                return node;
+            public Node<K, V> next() {
+                if (cursor != null) {                         //проверяем курсор на нул
+                    stack.push(cursor);                       //если курсор не нул то добавляем его в стек
+                    cursor = cursor.getLeft();                //курсор меняем на левого ребенка
+                }
+                cursor = stack.pop();                           //это происходит если курсор оказался нул, а это происходит в том случае если мы пробежали по всему левому ряду
+                Node<K,V> node = cursor;                        //выше мы выняли последнюю ноду помещенную в стек и теперь присваиваем ей имя
+                cursor = cursor.getRight();                     //у ноды которую достали последней достаем правого ребенка
+                return node;                                    //возвращаем ноду которую последней достали из стека
             }
         };
     }
 
-    public static class Node<K,V> {
+    public static class Node<K, V> {
         V value;
         K key;
         Node<K, V> left;
@@ -220,6 +214,10 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
 
         private void setRight(Node right) {
             this.right = right;
+        }
+
+        public String toString(){
+            return "Key = " + key + " Value = " + value;
         }
     }
 }
