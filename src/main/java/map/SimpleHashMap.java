@@ -185,7 +185,7 @@ public class SimpleHashMap<K, V> implements SimpleMap<K, V> {
             return next;
         }
 
-        private V getValue() {
+        protected V getValue() {
             return value;
         }
 

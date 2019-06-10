@@ -1,12 +1,11 @@
 package map;
 
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, Iterable {
-    List<Node> list;
+    List listValue;
+    List listKey;
+    List list;
     Node<K, V> root = null;
     Comparator<? extends K> comparator;
     int size;
@@ -26,7 +25,7 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
         return getByTheKey(key, root);
     }
 
-    public V getByTheKey(K key, Node<K, V> nodeCursor) {
+    private V getByTheKey(K key, Node<K, V> nodeCursor) {
         Node<K, V> newCursor = nodeCursor;
         K keyCursor = newCursor.getKey();
 
@@ -103,9 +102,6 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
         }
         K cursorKey = cursorNode.getKey();
         if (cursorKey.compareTo(key) == 0) {
-            if (cursorNode.getRight() == null && cursorNode.getLeft() == null) {
-
-            }
             return true;
         }
         return false;
@@ -123,9 +119,8 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
             getAllKeys(node.getLeft());
             getAllKeys(node.getRight());
         }
-    return  listKey;
+        return  listKey;
     }
-
 
     @Override
     public List values() {
@@ -144,6 +139,13 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
 
     @Override
     public boolean ontainsKey(K key) {
+        Iterator test = this.iterator();
+        while (test.hasNext()== true ) {
+            Node<K,V> node =(Node<K, V>) test.next();
+           if(node.getKey() == key){
+               return true;
+           }
+        }
         return false;
     }
 
@@ -155,34 +157,31 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
     @Override
     public Iterator iterator() {
         return new Iterator() {
-            Node<K,V> cursor = root;
+            Stack<Node> stack = new Stack<>();
+
+            public Iterator(){
+                stack.push(root);
+            }
             @Override
             public boolean hasNext() {
-                if(cursor != null){
-                    return true;
-                }
-                return false;
+                return (!stack.isEmpty());
             }
 
             @Override
-            public Object next() {
-                if(hasNext()){
-                    //сдесь я должен что то сделать с курсосром не пойму что
-                    if(cursor.getLeft() != null ){
-                        cursor = cursor.getLeft();
-                        return next();
-                    }
-                    if(cursor.getLeft() != null){
-                        cursor = cursor.getLeft();
-                        return next();
-                    }
-                }
-                return null;
+            public Node<K,V> next() {
+                if(root!=null || stack.empty()){stack.add(root);}
+                if (!hasNext()) throw new NoSuchElementException("No more nodes remain to iterate");
+                final Node<K,V> node = stack.pop();
+                if(node.getLeft()!= null)
+                    stack.push(node.getLeft());
+                if(node.getRight() != null)
+                    stack.push(node.getRight());
+                return node;
             }
         };
     }
 
-    private class Node<K, V> {
+    public static class Node<K,V> {
         V value;
         K key;
         Node<K, V> left;
@@ -222,6 +221,5 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
         private void setRight(Node right) {
             this.right = right;
         }
-
     }
 }
