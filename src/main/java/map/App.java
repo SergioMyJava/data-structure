@@ -7,8 +7,8 @@ public class App {
 
     public static void main(String[] args){
 
-        SimpleMap<Integer,String> exp1 = new SimpleTreeMap();
-        Iterator iterator = ((SimpleTreeMap<Integer, String>) exp1).iterator();
+        SimpleTreeMap<Integer,String> exp1 = new SimpleTreeMap();
+        Iterator iterator =  exp1.iterator();
         exp1.put(1,"one");
         exp1.put(2,"two");
         exp1.put(3,"three");
@@ -23,6 +23,8 @@ public class App {
         for(int i = 0; i<t.size();i++){
             System.out.println(t.get(i));
         }
+
+        System.out.println(exp1.getRott());
 
         System.out.println("test iterator ");//тут я пытаюсь итератор проверить
         if (iterator.hasNext() == true){

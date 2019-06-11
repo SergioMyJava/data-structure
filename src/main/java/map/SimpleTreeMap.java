@@ -8,10 +8,9 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
     List list;
     Node<K, V> root = null;
     int size;
-    Node<K,V> cursor;
 
     SimpleTreeMap() {
-        cursor = root;
+
     }
 
     @Override
@@ -28,7 +27,7 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
 
         if (keyCursor.compareTo(key) == 0)
             return newCursor.getValue();
-        
+
         else {
             if (keyCursor.compareTo(key) > 0) {
                 Node<K, V> newNodeCursor = newCursor.getLeft();
@@ -111,7 +110,7 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
 
     public List getAllKeys(Node node) {
         if (node != null) {
-            listKey.add((K) node.getKey());
+            listKey.add(node.getKey());
             getAllKeys(node.getLeft());
             getAllKeys(node.getRight());
         }
@@ -145,6 +144,10 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
         return false;
     }
 
+    public Node getRott(){                                          // необходимо удалить
+        return root;
+    }
+
     @Override
     public int getSize() {
         return size;
@@ -152,27 +155,7 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
 
     @Override
     public Iterator iterator() {
-        return new Iterator() {
-            Stack<Node> stack = new Stack<>();
-
-
-            @Override
-            public boolean hasNext() {
-                return (!stack.isEmpty() || cursor != null);  // если стеке что то есть или курсор не нул то вернет тру
-            }
-
-            @Override
-            public Node<K, V> next() {
-                if (cursor != null) {                         //проверяем курсор на нул
-                    stack.push(cursor);                       //если курсор не нул то добавляем его в стек
-                    cursor = cursor.getLeft();                //курсор меняем на левого ребенка
-                }
-                cursor = stack.pop();                           //это происходит если курсор оказался нул, а это происходит в том случае если мы пробежали по всему левому ряду
-                Node<K,V> node = cursor;                        //выше мы выняли последнюю ноду помещенную в стек и теперь присваиваем ей имя
-                cursor = cursor.getRight();                     //у ноды которую достали последней достаем правого ребенка
-                return node;                                    //возвращаем ноду которую последней достали из стека
-            }
-        };
+        return new IteratorForTreeMap(root);
     }
 
     public static class Node<K, V> {
