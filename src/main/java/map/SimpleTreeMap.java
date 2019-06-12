@@ -144,7 +144,7 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
         return false;
     }
 
-    public Node getRott(){                                          // необходимо удалить
+    public Node getRoot() {                                          // необходимо удалить
         return root;
     }
 
@@ -199,8 +199,45 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
             this.right = right;
         }
 
-        public String toString(){
+        public String toString() {
             return "Key = " + key + " Value = " + value;
+        }
+    }
+
+    public class IteratorForTreeMap<K, V> implements Iterator {
+        SimpleTreeMap.Node<K, V> root;
+        Stack<SimpleTreeMap.Node> stack;
+        boolean firstPass = true;
+
+        IteratorForTreeMap(SimpleTreeMap.Node<K, V> root) {
+            stack = new Stack<>();
+            this.root = root;
+        }
+
+        @Override
+        public boolean hasNext() {
+            if (stack.isEmpty() && firstPass == true) {
+                getAllNodes(root);
+                firstPass = false;
+            }
+            return (!stack.isEmpty());
+        }
+
+        @Override
+        public Object next() {
+            if (!stack.isEmpty()) {
+                return stack.pop();
+            }
+
+            return null;
+        }
+
+        private void getAllNodes(SimpleTreeMap.Node<K, V> node) {
+            if (node != null) {
+                stack.add(node);
+                getAllNodes(node.getLeft());
+                getAllNodes(node.getRight());
+            }
         }
     }
 }

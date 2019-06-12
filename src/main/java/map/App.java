@@ -24,7 +24,7 @@ public class App {
             System.out.println(t.get(i));
         }
 
-        System.out.println(exp1.getRott());
+        System.out.println(exp1.getRoot());
 
         System.out.println("test iterator ");//тут я пытаюсь итератор проверить
         if (iterator.hasNext() == true){
