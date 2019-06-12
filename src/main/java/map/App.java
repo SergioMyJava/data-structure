@@ -8,11 +8,12 @@ public class App {
     public static void main(String[] args){
 
         SimpleTreeMap<Integer,String> exp1 = new SimpleTreeMap();
-        Iterator iterator =  exp1.iterator();
+
         exp1.put(1,"one");
         exp1.put(2,"two");
         exp1.put(3,"three");
         exp1.put(4,"for");
+        Iterator iterator =  exp1.iterator();
         System.out.println(exp1.get(1));
         System.out.println(exp1.get(2));
         System.out.println(exp1.get(3));
@@ -27,7 +28,7 @@ public class App {
         System.out.println(exp1.getRoot());
 
         System.out.println("test iterator ");//тут я пытаюсь итератор проверить
-        if (iterator.hasNext() == true){
+        while (iterator.hasNext() == true){
             System.out.println(iterator.next());
         }
     }
