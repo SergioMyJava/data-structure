@@ -92,20 +92,20 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
             throw new NullPointerException();
         }
 
-        if (key.compareTo(cursorKey) < 0) {                                             // 1-ый случай когда искомая нода лежит слева
+        if (key.compareTo(cursorKey) < 0) {                                             // 1-ый случай когда искомая
             parent = cursorNode;
-            removeByTheKey(key, cursorNode.getLeft());
+            removeByTheKey(key, cursorNode.getLeft());                                 //нода лежит слева
         }
 
-        if (key.compareTo(key) > 0) {                                                   // 2-ой случай когда искомая нода лежит справа
-            parent = cursorNode;
+        if (key.compareTo(key) > 0) {                                                   // 2-ой случай когда искомая
+            parent = cursorNode;                                                        // нода лежит справа
             removeByTheKey(key, cursorNode.getRight());
         }
 
-        if (cursorKey.compareTo(key) == 0) {                                            // 3 случай
-            if (cursorNode.getLeft() == null && cursorNode.getRight() == null) {        //случай когда у удаляемого элемента левая и правая нода нул
-                if (parent.getRight() == cursorNode) {
-                    parent.setRight(null);
+        if (cursorKey.compareTo(key) == 0) {                                            // 3 случай когда нашли ноду
+            if (cursorNode.getLeft() == null && cursorNode.getRight() == null) {        //3.1 случай когда у удаляемого
+                if (parent.getRight() == cursorNode) {                                  // элемента левая и правая нода
+                    parent.setRight(null);                                              // нул
                     size--;
                     return true;
                 }
@@ -116,9 +116,9 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
                 }
             }
 
-            if ( cursorNode.getLeft() != null || cursorNode.getRight() == null){        //случай когда у удаляемого элемента левая нода не нул а правая нода нул
-                if (parent.getRight() == cursorNode) {
-                    parent.setRight(cursorNode.getLeft());
+            if ( cursorNode.getLeft() != null || cursorNode.getRight() == null){        //3.2 случай когда у удаляемого
+                if (parent.getRight() == cursorNode) {                                  //3.2.1элемента левая нода не нул
+                    parent.setRight(cursorNode.getLeft());                              //а правая нода нул
                     size--;
                     return true;
                 }
@@ -129,9 +129,9 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
                 }
             }
 
-            if ( cursorNode.getLeft() == null || cursorNode.getRight() != null){        //случай когда у удаляемого элемента левая нода нул а правая нода нет
-                if (parent.getRight() == cursorNode) {
-                    parent.setRight(cursorNode.getRight());
+            if ( cursorNode.getLeft() == null || cursorNode.getRight() != null){        //3.2.2случай когда у удаляемого
+                if (parent.getRight() == cursorNode) {                                  //элемента левая нода нул а
+                    parent.setRight(cursorNode.getRight());                             //правая нода нет
                     size--;
                     return true;
                 }
@@ -142,8 +142,8 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
                 }
             }
 
-            if (cursorNode.getLeft() != null || cursorNode.getRight() != null){
-                if (parent.getRight() == cursorNode) {
+            if (cursorNode.getLeft() != null || cursorNode.getRight() != null){         //3.2.3 когда оба листа не нул
+                if (parent.getRight() == cursorNode) {                   //тогда берем и подставляем левый лист или узел
                     parent.setRight(cursorNode.getLeft());
                     size--;
                     return true;
