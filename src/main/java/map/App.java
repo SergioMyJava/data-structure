@@ -25,11 +25,14 @@ public class App {
             System.out.println(t.get(i));
         }
 
-        System.out.println(exp1.getRoot());
-
         System.out.println("test iterator ");//тут я пытаюсь итератор проверить
         while (iterator.hasNext() == true){
             System.out.println(iterator.next());
         }
+
+        System.out.println(exp1.getSize());
+        exp1.remove(3);
+
+        System.out.println(exp1.getSize());
     }
 }

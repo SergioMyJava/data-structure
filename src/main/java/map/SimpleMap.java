@@ -6,8 +6,8 @@ public interface SimpleMap<K,V> {
     V get (K key );
     boolean put(K key,V value);
     boolean remove(K key );
-    List keys();
-    List values();
+    List<K> keys();
+    List<V> values();
     boolean ontainsKey(K key );
     int getSize();
 }

@@ -5,13 +5,8 @@ import java.util.*;
 public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, Iterable {
     List listValue;
     List listKey;
-    List list;
     Node<K, V> root = null;
     int size;
-
-    SimpleTreeMap() {
-
-    }
 
     @Override
     public V get(K key) {
@@ -33,7 +28,6 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
                 Node<K, V> newNodeCursor = newCursor.getLeft();
                 return getByTheKey(key, newNodeCursor);
             }
-
             if (keyCursor.compareTo(key) < 0) {
                 Node<K, V> newNodeCursor = newCursor.getRight();
                 return getByTheKey(key, newNodeCursor);
@@ -48,6 +42,7 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
     }
 
     private boolean addNode(K key, V value, Node<K, V> nodeCursor) {
+
         if (root == null) {
             root = new Node(value, key, null, null);
             size++;
@@ -67,12 +62,10 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
                 addNode(key, value, newNodeCursor);
             }
         }
-
         if (keyCursor.compareTo(key) == 0) {
             nodeCursor.setValue(value);
             return true;
         }
-
         if (keyCursor.compareTo(key) < 0) {
             Node<K, V> right = nodeCursor.getRight();
             if (right == null) {
@@ -92,18 +85,81 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
     }
 
     private boolean removeByTheKey(K key, Node<K, V> cursorNode) {
+        K cursorKey = cursorNode.getKey();
+        Node<K, V> parent = null;
+
         if (root == null) {
             throw new NullPointerException();
         }
-        K cursorKey = cursorNode.getKey();
-        if (cursorKey.compareTo(key) == 0) {
-            return true;
+
+        if (key.compareTo(cursorKey) < 0) {                                             // 1-ый случай когда искомая нода лежит слева
+            parent = cursorNode;
+            removeByTheKey(key, cursorNode.getLeft());
+        }
+
+        if (key.compareTo(key) > 0) {                                                   // 2-ой случай когда искомая нода лежит справа
+            parent = cursorNode;
+            removeByTheKey(key, cursorNode.getRight());
+        }
+
+        if (cursorKey.compareTo(key) == 0) {                                            // 3 случай
+            if (cursorNode.getLeft() == null && cursorNode.getRight() == null) {        //случай когда у удаляемого элемента левая и правая нода нул
+                if (parent.getRight() == cursorNode) {
+                    parent.setRight(null);
+                    size--;
+                    return true;
+                }
+                if (parent.getLeft() == cursorNode) {
+                    parent.setLeft(null);
+                    size--;
+                    return true;
+                }
+            }
+
+            if ( cursorNode.getLeft() != null || cursorNode.getRight() == null){        //случай когда у удаляемого элемента левая нода не нул а правая нода нул
+                if (parent.getRight() == cursorNode) {
+                    parent.setRight(cursorNode.getLeft());
+                    size--;
+                    return true;
+                }
+                if (parent.getLeft() == cursorNode) {
+                    parent.setLeft(cursorNode.getLeft());
+                    size--;
+                    return true;
+                }
+            }
+
+            if ( cursorNode.getLeft() == null || cursorNode.getRight() != null){        //случай когда у удаляемого элемента левая нода нул а правая нода нет
+                if (parent.getRight() == cursorNode) {
+                    parent.setRight(cursorNode.getRight());
+                    size--;
+                    return true;
+                }
+                if (parent.getLeft() == cursorNode) {
+                    parent.setLeft(cursorNode.getRight());
+                    size--;
+                    return true;
+                }
+            }
+
+            if (cursorNode.getLeft() != null || cursorNode.getRight() != null){
+                if (parent.getRight() == cursorNode) {
+                    parent.setRight(cursorNode.getLeft());
+                    size--;
+                    return true;
+                }
+                if (parent.getLeft() == cursorNode) {
+                    parent.setLeft(cursorNode.getLeft());
+                    size--;
+                    return true;
+                }
+            }
         }
         return false;
     }
 
     @Override
-    public List keys() {
+    public List<K> keys() {
         listKey = new LinkedList();
         return getAllKeys(root);
     }
@@ -125,7 +181,7 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
 
     private List getAllValues(Node node) {
         if (node != null) {
-            listValue.add((K) node.getValue());
+            listValue.add(node.getValue());
             getAllValues(node.getLeft());
             getAllValues(node.getRight());
         }
@@ -142,10 +198,6 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
             }
         }
         return false;
-    }
-
-    public Node getRoot() {                                          // необходимо удалить
-        return root;
     }
 
     @Override
