@@ -40,7 +40,10 @@ class SimpleTreeMapTest {
 
     @Test
     void remove() {
-        //assertEquals();
+        assertEquals(true,exp.remove(3));
+        assertEquals(3,exp.getSize());
+        assertEquals(true,exp.remove(4));
+        assertEquals(2,exp.getSize());
     }
 
     @Test

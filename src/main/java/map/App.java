@@ -8,8 +8,7 @@ public class App {
     public static void main(String[] args){
 
         SimpleTreeMap<Integer,String> exp1 = new SimpleTreeMap();
-
-        exp1.put(1,"one");
+        System.out.println(exp1.put(1,"one"));
         exp1.put(2,"two");
         exp1.put(3,"three");
         exp1.put(4,"for");
@@ -31,8 +30,10 @@ public class App {
         }
 
         System.out.println(exp1.getSize());
-        exp1.remove(3);
-
+        System.out.println(exp1.get(3));
+        exp1.remove(1);
+        System.out.println(exp1.getRoot());
         System.out.println(exp1.getSize());
+
     }
 }
