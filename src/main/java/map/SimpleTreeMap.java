@@ -9,10 +9,6 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
     Node<K, V> root = null;
     int size;
 
-    public Node<K,V> getRoot(){
-        return root;
-    }
-
     @Override
     public V get(K key) {
         if (root == null) {

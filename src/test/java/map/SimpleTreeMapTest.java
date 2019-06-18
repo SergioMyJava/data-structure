@@ -44,6 +44,10 @@ class SimpleTreeMapTest {
         assertEquals(3,exp.getSize());
         assertEquals(true,exp.remove(4));
         assertEquals(2,exp.getSize());
+        assertEquals(true,exp.remove(1));
+        assertEquals(1,exp.getSize());
+        assertEquals(true,exp.remove(2));
+        assertEquals(0,exp.getSize());
     }
 
     @Test

@@ -32,7 +32,6 @@ public class App {
         System.out.println(exp1.getSize());
         System.out.println(exp1.get(3));
         exp1.remove(1);
-        System.out.println(exp1.getRoot());
         System.out.println(exp1.getSize());
 
     }
