@@ -1,46 +1,36 @@
 package mergeSort;
 
+import java.util.Arrays;
+
 public class Sort {
 
-    public  static int[] sort(int [] arrayA){
-        if(arrayA == null){
-            return arrayA;
+    public static int[] sort(int[] arr) {
+        if (arr.length < 2) {
+            return arr;
         }
-
-        if(arrayA.length < 2){
-            return arrayA;
-        }
-
-        int [] arrayB = new int[arrayA.length/2];
-        System.arraycopy(arrayA,0,arrayB,0,arrayA.length/2);
-
-        int [] arrayC = new int[arrayA.length/2];
-        System.arraycopy(arrayA,arrayA.length/2,arrayC,0,arrayA.length/2);
-
-        arrayB = sort(arrayB);
-        arrayC = sort(arrayC);
-        return merge(arrayB,arrayC);
+        int[] arr1 = Arrays.copyOfRange(arr, 0, arr.length / 2);
+        int[] arr2 = Arrays.copyOfRange(arr, arr.length / 2, arr.length);
+        return merge(sort(arr1), sort(arr2));
     }
 
-    public static int[] merge(int [] arrayА, int [] arrayB){
-        int [] arrayC = new int[arrayА.length + arrayB.length];
-        int positionA = 0, positionB = 0;
+    public static int[] merge(int[] arr1, int arr2[]) {
+        int[] arr = new int[arr1.length + arr2.length];
+        int i1 = 0;
+        int i2 = 0;
 
-        for (int i = 0; i < arrayC.length; i++) {
-            if (positionA == arrayА.length){
-                arrayC[i] = arrayB[i - positionB];
-                positionB++;
-            } else if (positionB == arrayB.length) {
-                arrayC[i] = arrayА[i - positionA];
-                positionA++;
-            } else if (arrayА[i - positionA] < arrayB[i - positionB]) {
-                arrayC[i] = arrayА[i - positionA];
-                positionB++;
+        for (int i = 0; i < arr.length; i++) {
+            if (i1 == arr1.length) {
+                arr[i] = arr2[i2++];
+            } else if (i2 == arr2.length) {
+                arr[i] = arr1[i1++];
             } else {
-                arrayC[i] = arrayB[i - positionB];
-                positionA++;
+                if (arr1[i1] < arr2[i2]) {
+                    arr[i] = arr1[i1++];
+                } else {
+                    arr[i] = arr2[i2++];
+                }
             }
         }
-        return arrayC;
+        return arr;
     }
 }
