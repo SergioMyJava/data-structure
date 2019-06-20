@@ -10,6 +10,8 @@ class SortTest {
     @Test
     void sort() {
         int[] c = Sort.sort(a);
-        assertEquals(true,b.equals(c));
+        for(int k = 0;k<c.length;k++){
+                assertEquals(true,c[k] == b[k]);
+        }
     }
 }
