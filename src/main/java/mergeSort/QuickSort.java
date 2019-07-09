@@ -1,6 +1,6 @@
 package mergeSort;
 
-public class DeleteThis {
+public class QuickSort {
     public int[] sort(int[] array) {
         return quickSort(array, 0, array.length-1);
     }

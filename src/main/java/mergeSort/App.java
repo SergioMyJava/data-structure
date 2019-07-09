@@ -15,7 +15,7 @@ public class App {
 //            System.out.println(b[k] == c[k]);
 //        }
 
-        DeleteThis t = new DeleteThis();
+        QuickSort t = new QuickSort();
         int [] sorted = t.sort(a);
         for(int g : sorted){
             System.out.print(g + " ");
