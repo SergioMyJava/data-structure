@@ -28,12 +28,6 @@ public class QuickSort {
                 array[finish] = temp;
             }
 
-//            if(beginning == pivot){
-//                pivot = finish;
-//            }
-//            else{
-//                pivot = beginning;
-//            }
             quickSort(array, beginning, pivot);
             quickSort(array, pivot-1, finish);
         }
