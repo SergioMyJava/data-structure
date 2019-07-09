@@ -2,33 +2,15 @@ package mergeSort;
 
 import java.util.Arrays;
 
-public class Sort {
+public class SortWithMinArray {
 
     public static int[] sort(int[] arr) {
-        int[] index = new int[arr.length];
-        int midl = arr.length/2;
-        int leftIndex;
-        int rightIndex;
-
-        for(int i = 0;i<arr.length;i++){
-            leftIndex = midl/2;
-            index[i] = leftIndex;
-
+        if (arr.length < 2) {
+            return arr;
         }
-
-        return null;
-    }
-
-    public static int workWithIndex(int index){
-        int left = index/2;
-
-        if(index%2 == 0){
-            int rightIndex = index/2;
-        }
-        else{
-            int rightIndex = (index/2)+1;
-        }
-        return left;
+        int[] arr1 = Arrays.copyOfRange(arr, 0, arr.length / 2);
+        int[] arr2 = Arrays.copyOfRange(arr, arr.length / 2, arr.length);
+        return merge(sort(arr1), sort(arr2));
     }
 
     public static int[] merge(int[] arr1, int arr2[]) {
