@@ -1,17 +1,15 @@
 package mergeSort;
 
 public class QuickSort {
+
     public int[] sort(int[] array) {
-        return quickSort(array, 0, array.length-1);
+        return quickSort(array, 0, array.length - 1);
     }
 
     public int[] quickSort(int[] array, int start, int end) {
-        if (start >= end) {
-            return array;
-        }
         int beginning = start;
         int finish = end;
-        int pivot = finish / 2;
+        int pivot = beginning - (beginning - finish) / 2;
 
         while (beginning < finish) {
 
@@ -23,13 +21,20 @@ public class QuickSort {
             }
 
             if (beginning < finish) {
-                int temp = array[beginning];
-                array[beginning] = array[finish];
-                array[finish] = temp;
-            }
+                int temp = array[finish];
+                array[finish] = array[beginning];
+                array[beginning] = temp;
 
-            quickSort(array, beginning, pivot);
-            quickSort(array, pivot-1, finish);
+                if (beginning == pivot)
+                    pivot = finish;
+                else if (finish == pivot)
+                    pivot = beginning;
+            }
+        }
+
+        if (start < end) {
+            quickSort(array, start, pivot);
+            quickSort(array, pivot + 1, end);
         }
         return array;
     }
