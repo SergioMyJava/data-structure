@@ -1,9 +1,12 @@
 package mergeSort;
 
 import org.junit.jupiter.api.Test;
+import sort.MergeSort;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class SortTest {
+class MergeSortTest {
+    MergeSort exp = new MergeSort();
     int[] a = {3,6,1,5,7,22};
     int[] b = {1,3,5,6,7,22};
     int[] k = {7,5,21,19,34,7};
@@ -11,8 +14,8 @@ class SortTest {
 
     @Test
     void sort() {
-        int[] c = Sort.sort(a);
-        int[] m = Sort.sort(k);
+        int[] c = exp.sort(a);
+        int[] m = exp.sort(k);
         for(int k = 0;k<c.length;k++){
             assertEquals(true,c[k] == b[k]);
             assertEquals(true,m[k] == h[k]);

@@ -1,4 +1,4 @@
-package mergeSort;
+package sort;
 
 
 public class App {
