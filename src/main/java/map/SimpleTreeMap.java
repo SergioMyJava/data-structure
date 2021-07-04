@@ -36,6 +36,37 @@ public class SimpleTreeMap<K extends Comparable, V> implements SimpleMap<K, V>, 
         }
         return null;
     }
+    
+    private static Integer count = 0;
+
+    public static void main(String[] args) {
+
+        System.out.println(smartMethod(count));
+        count = 0;
+        System.out.println(dumbMethod(count));
+        System.out.println("И таки как, есть разница? Нужно было ретурны расставить, не?");
+        
+    }
+
+    private static Integer smartMethod(Integer count) {
+        if (count > 10) {
+            return count;
+        } else if (true) {
+            return smartMethod(++count);
+        }
+
+        return null;
+    }
+
+    private static Integer dumbMethod(Integer count) {
+        if (count > 10) {
+            return count;
+        } else if (true) {
+            dumbMethod(++count);
+        }
+
+        return null;
+    }
 
     @Override
     public boolean put(K key, V value) {
